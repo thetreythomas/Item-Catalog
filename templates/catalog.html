@@ -1,0 +1,54 @@
+{% include 'header.html' %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+{% if user %}
+    <a href="{{ url_for('addNewItem', catalog_name=catalog.name) }}"><button>Add New Item</button></a>
+{% endif %}
+
+<div class="col-md-4">
+{% for i in items %}
+    <table class="table table-hover text-left">
+        <thead>
+            <tr>
+                <th>{{ catalog.name }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Item ID: </th>
+                <td>{{ i.id }}</td>
+            </tr>
+            <tr>
+                <th>Item Name: </th>
+                <td><a href="{{ url_for('showItem', catalog_name=i.catalog.name , item_id=i.id) }}">
+                    {{ i.item_name}}</a></td>
+            </tr>
+            <tr>
+                <th>Item Description: </th>
+                <td>{{ i.description }}</td>
+            </tr>
+            <tr>
+                <th>Catalog: </th>
+                <td>{{ i.catalog.name }}</td>
+            </tr>
+            <tr>
+                <th>Added by User: </th>
+                <td>{{ i.user.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+{% endfor %}
+</div>
+
+{% include 'footer.html' %}

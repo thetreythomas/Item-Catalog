@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Item for {{catalog.name}}</title>
+</head>
+<body>
+
+<h1>New Item for {{catalog.name}}</h1>
+
+<form action="{{ url_for('addNewItem', catalog_name = catalog.name )}}" method="post">
+    Name:<br>
+    <input type="text" size="45" name="name"><br>
+    Description:<br>
+    <textarea name="description" cols="45" rows="5"></textarea><br>
+    <input type="submit" value="Create">
+</form>
+
+</body>
+</html>

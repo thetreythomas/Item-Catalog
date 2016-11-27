@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Item Catalog App - Login</title>
+
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+<!-- Custom CSS -->
+<style>
+  body {
+    padding-top: 100px;
+    /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation
+    changes. */
+  }
+</style>
+
+
+<!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"> </script>
+<script src="//apis.google.com/js/platform.js?onload=start"> </script>
+<!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+</head>
+
+<body>
+
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand navbar-right" href="#">Item Catalog</a>
+        </div>
+
+
+        <div class="navbar-header pull-right">
+            <p class="navbar-text">Signed in as....</p>
+        </div>
+        <div class="navbar-text pull-right">
+            <div id="signInButton">
+            <span class="g-signin"
+            data-scope="openid email"
+            data-clientid="353431581222-oksir6o52ku68fk80abotsgu51ufhufp.apps.googleusercontent.com"
+            data-redirecturi="postmessage"
+            data-accesstype="offline"
+            data-cookiepolicy="single_host_origin"
+            data-callback="signInCallback"
+            data-approvalprompt="force">
+            </span>
+        </div>
+        <div id="result"></div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+<script>
+    function signInCallback(authResult) {
+        if (authResult['code']) {
+
+            //Hide the sign-in button now that the user is authorized
+            $('#signInButton').attr('style', 'display: none');
+
+            //Send the one-time-use code to the server, if the server responds, write a 'login successful'
+            //message to the web page and then redirect back to the main login page
+            $.ajax({
+                type: 'POST',
+                url: '/gconnect?state={{STATE}}',
+                processData: false,
+                data: authResult['code'],
+                contentType: 'application/octet-stream; charset=utf-8',
+                success: function(result) {
+                    //Handle or verify the server response if necessary
+                    if (result) {
+                        $('#result').html('Login Successful!<br>'+ result + '</br>Redirecting...')
+                        setTimeout(function() {
+                            window.location.href = "/catalogs";
+                        }, 4000);
+
+                    } else if (authResult['error']) {
+                        console.log('There was an error: ' + authResult['error']);
+                    } else {
+                        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                    }
+                }
+            });
+        }
+
+    }
+</script>
+
+<!-- jQuery Version 3.1.0 -->
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+</body>
+
+</html>

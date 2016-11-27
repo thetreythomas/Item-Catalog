@@ -1,0 +1,54 @@
+{% include 'header.html' %}
+
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+<div class="col-md-4">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Catalog</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for catalog in catalogs %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('showCatalogItems', catalog_name = catalog.name) }}">{{ catalog.name }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-8">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Latest Items</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('showItem', catalog_name = item.catalog.name, item_id = item.id) }}">
+                            {{ item.item_name }} ({{ item.catalog.name }})</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% include 'footer.html' %}

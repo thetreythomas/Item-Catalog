@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Item - {{ item.item_name }}</title>
+</head>
+<body>
+
+<h1>Edit Item - {{ item.item_name }}</h1>
+
+<form action="{{ url_for('editItem', catalog_name = catalog.name, item_id = item.id )}}" method="post">
+    Name:<br>
+    <input type='text' size="30" name='name' placeholder="{{ item.item_name }}"><br>
+    Description:<br>
+    <textarea name="description" cols="45" rows="5">{{ item.description }}</textarea><br>
+    <input type="submit" value="Edit">
+</form>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Item - {{ item.item_name }}</title>
+</head>
+<body>
+
+<h1>Delete Item - {{ item.item_name }} ?</h1>
+
+<form action="{{ url_for('deleteItem', catalog_name = catalog.name, item_id = item.id) }}" method="post">
+    Are you sure you want to delete {{item.item_name}}? <br>
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a New Catalog</title>
+</head>
+<body>
+
+<h1>Create a New Catalog</h1>
+
+<form action="{{ url_for('addNewCatalog') }}" method="post">
+    Name:
+    <input type="text" size="45" name="name">
+    <input type="submit" value="Create">
+</form>
+
+</body>
+</html>
